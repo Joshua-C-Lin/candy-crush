@@ -28,5 +28,6 @@ body {
 }
 
 .cube:hover {
+  cursor: all-scroll;
   opacity: 0.7;
 }
