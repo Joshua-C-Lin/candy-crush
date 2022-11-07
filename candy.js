@@ -3,6 +3,15 @@ const candies = ["Blue", "Orange", "Green", "Yellow", "Red", "Purple"];
 
 // 更新遊戲版的狀態整列
 const board = [];
+let candyData = [];
+
+function test() {
+  console.log(
+    candyData.filter(function (element, index, arr) {
+      return arr.indexOf(element) === index;
+    })
+  );
+}
 
 // 基本數據定義
 const rows = 9;
@@ -105,7 +114,7 @@ function dragEnd() {
   let isAdjacent = moveLeft || moveRight || moveTop || moveDown;
 
   // 更換背景圖片
-  if (isAdjacent) {
+  if (true) {
     let currImg = currTile.src;
     let otherImg = otherTile.src;
     currTile.src = otherImg;
@@ -124,15 +133,99 @@ function dragEnd() {
 
 // 消除糖果
 function crushCandy() {
-  crushFive();
-  crushFour();
-  crushThree();
+  // crushFive();
+  // crushFour();
+  // crushThree();
+  crushEver();
 
   // 更新分數
   if (isFirstTime) {
     document.getElementById("score").innerText = 0;
   } else {
+
+
+    // console.log(candyData);
+
     document.getElementById("score").innerText = score;
+  }
+
+  clearCandyData();
+
+  
+}
+
+//清空 candyData
+function clearCandyData() {
+  score += candyData.length * 10;
+  candyData.forEach((item) => {
+    item.src = "./images/blank.png";
+  });
+  candyData = [];
+}
+
+// 通用
+function crushEver() {
+  const crushAmount = 2;
+  // 檢查 rows
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < columns - crushAmount; c++) {
+      let candy1 = board[r][c];
+      let candy2 = board[r][c + 1];
+      let candy3 = board[r][c + 2];
+      if (
+        candy1.src == candy2.src &&
+        candy2.src == candy3.src &&
+        !candy1.src.includes("blank")
+      ) {
+        if (isFirstTime) {
+          candy1.src = "./images/blank.png";
+          candy2.src = "./images/blank.png";
+          candy3.src = "./images/blank.png";
+        }
+
+        if (!isFirstTime) {
+          // score += 30;
+          candyData.includes(candy1) ? "" : candyData.push(candy1);
+          candyData.includes(candy2) ? "" : candyData.push(candy2);
+          candyData.includes(candy3) ? "" : candyData.push(candy3);
+          // candyData.push(candy1);
+          // candyData.push(candy2);
+          // candyData.push(candy3);
+          // console.log("左右", candyData);
+        }
+      }
+    }
+  }
+
+  // 檢查 columns
+  for (let c = 0; c < columns; c++) {
+    for (let r = 0; r < rows - crushAmount; r++) {
+      let candy1 = board[r][c];
+      let candy2 = board[r + 1][c];
+      let candy3 = board[r + 2][c];
+      if (
+        candy1.src == candy2.src &&
+        candy2.src == candy3.src &&
+        !candy1.src.includes("blank")
+      ) {
+        if (isFirstTime) {
+          candy1.src = "./images/blank.png";
+          candy2.src = "./images/blank.png";
+          candy3.src = "./images/blank.png";
+        }
+
+        if (!isFirstTime) {
+          // score += 30;
+          candyData.includes(candy1) ? "" : candyData.push(candy1);
+          candyData.includes(candy2) ? "" : candyData.push(candy2);
+          candyData.includes(candy3) ? "" : candyData.push(candy3);
+          // candyData.push(candy1);
+          // candyData.push(candy2);
+          // candyData.push(candy3);
+          // console.log("上下", candyData);
+        }
+      }
+    }
   }
 }
 
@@ -394,7 +487,7 @@ function checkValid() {
     }
   }
 
-  return false;
+  return true;
 }
 
 // 更新頁面糖果
