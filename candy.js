@@ -8,6 +8,7 @@ const board = [];
 const rows = 9;
 const columns = 9;
 let score = 0;
+let isFirstTime = true;
 
 // 拖曳時數據
 var currTile; // 當下點擊的糖果
@@ -35,6 +36,7 @@ function startGame() {
       let tile = document.createElement("img");
       tile.id = r.toString() + "-" + c.toString();
       tile.src = "./images/" + randomCandy() + ".png";
+      tile.setAttribute("class", "cube");
 
       // 拖曳功能監聽
       tile.addEventListener("dragstart", dragStart);
@@ -108,6 +110,7 @@ function dragEnd() {
     let otherImg = otherTile.src;
     currTile.src = otherImg;
     otherTile.src = currImg;
+    isFirstTime = false;
 
     let validMove = checkValid();
     if (!validMove) {
@@ -124,9 +127,13 @@ function crushCandy() {
   crushFive();
   crushFour();
   crushThree();
-  
+
   // 更新分數
-  document.getElementById("score").innerText = score;
+  if (isFirstTime) {
+    document.getElementById("score").innerText = 0;
+  } else {
+    document.getElementById("score").innerText = score;
+  }
 }
 
 // 三消
@@ -146,7 +153,9 @@ function crushThree() {
         candy1.src = "./images/blank.png";
         candy2.src = "./images/blank.png";
         candy3.src = "./images/blank.png";
-        score += 30;
+        if (!isFirstTime) {
+          score += 30;
+        }
       }
     }
   }
@@ -165,7 +174,9 @@ function crushThree() {
         candy1.src = "./images/blank.png";
         candy2.src = "./images/blank.png";
         candy3.src = "./images/blank.png";
-        score += 30;
+        if (!isFirstTime) {
+          score += 30;
+        }
       }
     }
   }
@@ -190,7 +201,9 @@ function crushFour() {
         candy2.src = "./images/blank.png";
         candy3.src = "./images/blank.png";
         candy4.src = "./images/blank.png";
-        score += 40;
+        if (!isFirstTime) {
+          score += 40;
+        }
       }
     }
   }
@@ -211,7 +224,9 @@ function crushFour() {
         candy2.src = "./images/blank.png";
         candy3.src = "./images/blank.png";
         candy4.src = "./images/blank.png";
-        score += 40;
+        if (!isFirstTime) {
+          score += 40;
+        }
       }
     }
   }
@@ -239,7 +254,9 @@ function crushFive() {
         candy3.src = "./images/blank.png";
         candy4.src = "./images/blank.png";
         candy5.src = "./images/blank.png";
-        score += 50;
+        if (!isFirstTime) {
+          score += 50;
+        }
       }
     }
   }
@@ -263,7 +280,9 @@ function crushFive() {
         candy3.src = "./images/blank.png";
         candy4.src = "./images/blank.png";
         candy5.src = "./images/blank.png";
-        score += 50;
+        if (!isFirstTime) {
+          score += 50;
+        }
       }
     }
   }
