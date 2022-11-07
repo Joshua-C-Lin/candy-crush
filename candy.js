@@ -114,7 +114,7 @@ function dragEnd() {
   let isAdjacent = moveLeft || moveRight || moveTop || moveDown;
 
   // 更換背景圖片
-  if (true) {
+  if (isAdjacent) {
     let currImg = currTile.src;
     let otherImg = otherTile.src;
     currTile.src = otherImg;
@@ -487,7 +487,7 @@ function checkValid() {
     }
   }
 
-  return true;
+  return false;
 }
 
 // 更新頁面糖果
