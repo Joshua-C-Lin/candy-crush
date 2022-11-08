@@ -103,6 +103,7 @@ function dragEnd() {
   let moveTop = r2 == r - 1 && c == c2;
   let moveDown = r2 == r + 1 && c == c2;
 
+  // 判斷位移步數只能為 1
   let isAdjacent = moveLeft || moveRight || moveTop || moveDown;
 
   // 更換背景圖片
@@ -132,8 +133,6 @@ function crushCandy() {
   if (isFirstTime) {
     document.getElementById("score").innerText = 0;
   } else {
-    // console.log(candyData);
-
     document.getElementById("score").innerText = score;
   }
 
