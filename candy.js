@@ -10,7 +10,6 @@ const rows = 9;
 const columns = 9;
 let score = 0;
 let isFirstTime = true;
-let stillHaveGap = true;
 
 // 拖曳時數據
 var currTile; // 當下點擊的糖果
@@ -138,12 +137,6 @@ function crushCandy() {
   }
 
   clearCandyData();
-  
-  // slideCandy();
-  // console.log('觸發 slideCandy')
-  
-  // generateCandy();
-  // console.log('觸發 generateCandy')
 }
 
 //清空 candyData
@@ -263,34 +256,44 @@ function checkValid() {
 }
 
 // 更新頁面糖果
-function slideCandy() {
+async function slideCandy() {
   // 讓糖果補下來
   for (let c = 0; c < columns; c++) {
     let index = rows - 1;
-    for (let r = columns - 1; r >= 0; r--) {
-      if (!board[r][c].src.includes("blank")) {
-        board[index][c].src = board[r][c].src;
-        index -= 1;
-        stillHaveGap = false;
-        generateCandy();
-      }
-    }
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        for (let r = columns - 1; r >= 0; r--) {
+          if (!board[r][c].src.includes("blank")) {
+            board[index][c].src = board[r][c].src;
+            index -= 1;
+            console.log("下滑");
+            generateCandy();
+          }
+        }
 
-    // 清空滑下來之後上方的糖果
-    for (let r = index; r >= 0; r--) {
-      board[r][c].src = "./images/blank.png";
-    }
+        // 清空滑下來之後上方的糖果
+        for (let r = index; r >= 0; r--) {
+          board[r][c].src = "./images/blank.png";
+        }
+        resolve();
+      }, 40);
+    });
   }
   crushCandy();
 }
 
 //更新後補充糖果
-function generateCandy() {
+async function generateCandy() {
   for (let c = 0; c < columns; c++) {
-    if (board[0][c].src.includes("blank")) {
-      board[0][c].src = "./images/" + randomCandy() + ".png";
-      slideCandy();
-    }
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        if (board[0][c].src.includes("blank")) {
+          board[0][c].src = "./images/" + randomCandy() + ".png";
+          slideCandy();
+        }
+        resolve();
+      }, 50);
+    });
   }
   crushCandy();
 }
