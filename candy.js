@@ -10,6 +10,7 @@ const rows = 9;
 const columns = 9;
 let score = 0;
 let isFirstTime = true;
+let stillHaveGap = true;
 
 // 拖曳時數據
 var currTile; // 當下點擊的糖果
@@ -19,7 +20,7 @@ window.onload = function () {
   startGame();
 
   window.setInterval(() => {
-    crushCandy();
+    // crushCandy();
     slideCandy();
     generateCandy();
   }, 100);
@@ -54,6 +55,8 @@ function startGame() {
     // 更新目前畫面狀況
     board.push(row);
   }
+  // 初始化畫面
+  crushCandy();
   console.log(board);
 }
 
@@ -122,6 +125,8 @@ function dragEnd() {
       otherTile.src = currImg;
     }
   }
+  crushCandy();
+  console.log("消除");
 }
 
 // 消除糖果
@@ -224,7 +229,7 @@ function checkValid() {
           candy3.src = "./images/blank.png";
         }
         if (!isFirstTime) {
-          return true
+          return true;
         }
       }
     }
@@ -247,7 +252,7 @@ function checkValid() {
           candy3.src = "./images/blank.png";
         }
         if (!isFirstTime) {
-          return true
+          return true;
         }
       }
     }
@@ -264,6 +269,7 @@ function slideCandy() {
       if (!board[r][c].src.includes("blank")) {
         board[index][c].src = board[r][c].src;
         index -= 1;
+        stillHaveGap = false;
       }
     }
 
@@ -272,6 +278,7 @@ function slideCandy() {
       board[r][c].src = "./images/blank.png";
     }
   }
+  crushCandy();
 }
 
 //更新後補充糖果
@@ -281,4 +288,5 @@ function generateCandy() {
       board[0][c].src = "./images/" + randomCandy() + ".png";
     }
   }
+  crushCandy();
 }
