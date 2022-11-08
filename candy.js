@@ -18,12 +18,6 @@ var otherTile; // 被替換的糖果
 
 window.onload = function () {
   startGame();
-
-  window.setInterval(() => {
-    // crushCandy();
-    slideCandy();
-    generateCandy();
-  }, 100);
 };
 
 function randomCandy() {
@@ -57,6 +51,7 @@ function startGame() {
   }
   // 初始化畫面
   crushCandy();
+  slideCandy();
   console.log(board);
 }
 
@@ -126,6 +121,7 @@ function dragEnd() {
     }
   }
   crushCandy();
+  slideCandy();
   console.log("消除");
 }
 
@@ -142,6 +138,12 @@ function crushCandy() {
   }
 
   clearCandyData();
+  
+  // slideCandy();
+  // console.log('觸發 slideCandy')
+  
+  // generateCandy();
+  // console.log('觸發 generateCandy')
 }
 
 //清空 candyData
@@ -270,6 +272,7 @@ function slideCandy() {
         board[index][c].src = board[r][c].src;
         index -= 1;
         stillHaveGap = false;
+        generateCandy();
       }
     }
 
@@ -286,6 +289,7 @@ function generateCandy() {
   for (let c = 0; c < columns; c++) {
     if (board[0][c].src.includes("blank")) {
       board[0][c].src = "./images/" + randomCandy() + ".png";
+      slideCandy();
     }
   }
   crushCandy();
