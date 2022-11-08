@@ -5,14 +5,6 @@ const candies = ["Blue", "Orange", "Green", "Yellow", "Red", "Purple"];
 const board = [];
 let candyData = [];
 
-function test() {
-  console.log(
-    candyData.filter(function (element, index, arr) {
-      return arr.indexOf(element) === index;
-    })
-  );
-}
-
 // 基本數據定義
 const rows = 9;
 const columns = 9;
