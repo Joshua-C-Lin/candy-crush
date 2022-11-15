@@ -25,7 +25,7 @@ body {
 
 .view-port {
   margin-top: 100px;
-  height: calc(100vh - 48px) ;
+  height: calc(100vh - 48px);
 }
 
 .cube:hover {
